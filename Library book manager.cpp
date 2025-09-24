@@ -47,20 +47,30 @@ void borrowBook(string books[], char status[], int size){
     }
 }
 
-void deleteBook(string books[], char status[], int size){
+void deleteBook(string books[],int SIZE){
     int bookNum;
-    displayBooks(books, size);
-    cout<<"Enter the number of the book you want to borrow: ";
+    displayBooks(books, SIZE);
+    cout<<"Enter the number of the book you want to delete: ";
     cin>>bookNum;
 
-    for(int i = bookNum-1; i< size; i++){
+    for(int i = bookNum-1; i< SIZE; i++){
         books[i] = books[i+1];
     }
-    size--;
-    cout<<books[bookNum]<<" successfully deleted. \n";
+    SIZE--;
+    cout<<books[bookNum-1]<<" successfully deleted. \n";
 
 }
 
+void addBook(string books[], int size){
+    string newBook;
+    cout<<"Enter the title of the book: ";
+    cin.ignore();
+    getline(cin, newBook);
+    books[size] = newBook;
+    size++;
+
+    cout<<"Book successfully added\n";
+}
 
 
 
@@ -91,7 +101,8 @@ int main(){
                 break;
 
             case 2:
-                /*add book function*/
+                addBook(books, size);
+                displayBooks(books, size);
                 break;
 
             case 3:
@@ -103,7 +114,7 @@ int main(){
             break;
 
             case 5:
-            deleteBook(books, status, size);
+            deleteBook(books, SIZE);
             break;
 
             default:
