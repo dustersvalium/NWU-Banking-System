@@ -64,8 +64,28 @@ void addContacts(Contact contacts [], int &size){
 void viewContacts(Contact contacts [], int size){
     cout<<"ALL CONTACTS\n";
     for(int i = 0; i<size; i++){
-        cout<<"Contact #"<<(i+1)<<"-  Name: "<<contacts[i].name<<" Number: "<< contacts[i].phoneNum<<endl;
+        cout<<"Contact #"<<(i+1)<<"-  Name: "<<contacts[i].name<<", Number: "<< contacts[i].phoneNum<<endl;
     }
+}
+
+void deleteContact(Contact contacts [], int &size){
+    int delNum;
+    cout<<"Select the contact you want to delete: ";
+    cin>>delNum;
+    for(int i = delNum-1; i<size; i++ ){
+        contacts[i] = contacts[i+1];
+    }
+    size--;
+}
+
+void loadSimCard(Contact contacts [], int size){
+    ofstream file("Contacts.dat", ios::binary);
+    for(int i = 0; i<size; i++){
+        file.write(reinterpret_cast<char*>(contacts), sizeof(Contact)* size);
+    }
+    file.close();
+    cout<<"Contacts saved to file\n";
+
 }
 
 int main(){
@@ -88,12 +108,13 @@ int main(){
         cin>> choice;
 
         switch(choice){
-            case 1: addContacts(contacts, size); cout<<"Contact successfully added\n";
+            case 1: addContacts(contacts, size); cout<<"Contact successfully added\n"; break;
 
-            case 2: viewContacts(contacts, size);
-            case 3: /*delete contacts*/
+            case 2: viewContacts(contacts, size); break;
 
-            case 4: /*save simcard*/
+            case 3: deleteContact(contacts, size); cout<<"Contact sucessfully deleted\n"; viewContacts(contacts, size); break;
+
+            case 4: loadSimCard(contacts, size); break;
 
             case 5: /*load from simcard*/
 
